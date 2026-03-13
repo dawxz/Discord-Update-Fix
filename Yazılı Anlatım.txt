@@ -1,0 +1,116 @@
+Discord Update Fix
+Versiyon: 1.0
+Hazırlayan: Dawxz
+
+Bu araç Discord bağlantı / güncelleme sorunlarını çözmek için hazırlanmıştır.
+
+----------------------------------------------------------------------------------------------------
+
+1- Goodbyedpi çalışmıyorsa virüs programı var ise virüs programını sil.
+2- Goodbyedpi virüs programı olmadığı halde çalışmıyorsa eski sürümde bütün alternetifleri dene.
+
+----------------------------------------------------------------------------------------------------
+
+3- Hiç birinde çalışmıyorsa discord ip ve dns sıfırlamayı dene.
+
+----------------------------------------------------------------------------------------------------
+
+İp ve dns sıfırlama işlemleri:
+
+1- Komut sistemi açın. (CMD)
+2- nslookup discord.com yazın.
+Orada şu şekilde yazılar çıkacak:  
+					Server: hgw.local
+					Address: fe80::1
+
+					Non-authoritative answer:
+					Name: discord.com
+					Address: 195.175.254.2 (eğer bu tarz bir ip çıkarsa bu discordun sunucu ipsi değildir yani burası sorunludur. Bunu sıfırlamamız gerekmekte.)
+
+Şimdi ise bunu çözmek için yapmamız gereken adımlar şunlar:
+1- DNS & Network Fix klasöründeki "DNS-Settings" dosyasını çalıştırın. Gelen ekranda "Çarpı olmayan Ethernet (Wifi) seçeneğine sağ tıklıyoruz ve Özelliklere tıklıyoruz.
+2- Gelen ekranda "İnternet Protokolü Sürüm 4 (TCP/IPv4) seçeneğine iki kere sol tıklıyoruz.
+3- Açılan pencerede aşağıdaki seçeneklerde "DNS sunucu adresini otomatik olarak al" Seçeneği yerine "Aşşağıdaki DNS sunucu adreslerini kullan" seçeneğine çekiyoruz.
+4- Üstteki "Tercih edilen DNS sunucusu: 1.1.1.1 olacak. (Eğer işlemler çalışmaz ise 8.8.8.8 yapacağız.)
+5- Aşşağıdaki "Diğer DNS sunucusu: 1.0.0.1 olacak. (Eğer işlemler çalışmaz ise 8.8.4.4 yapacağız.)
+6- Yaptığımız işlemlerden sonra tamam seçeneğine tıklayarak bu ekranda "Internet Protokolü Sürüm 6 (TCP/IPv6) seçeneğinin tikini kaldırıyoruz.
+7- DNS & Network Fix klasörüne yeniden gidiyoruz.
+8- Sırasıyla şu dosyaları çalıştırıyoruz. "Flush-DNS.ps1", "Network-Reset.ps1", "Winsock-Reset.ps1"
+9- Sonrasında tekrardan cmd ekranına dönüp:
+
+"nslookup discord.com" yazıyoruz. Ve almamızı istediğimiz sonuç şudur:
+
+Server: one.one.one.one
+Address: 1.1.1.1
+
+Non-authoritative answer:
+Name: discord.com
+Addresses: 162.159.135.232
+	162.159.128.233
+	162.159.138.232
+	162.159.136.232
+	162.159.137.232
+
+Bu işlemleri yaptıktan sonra discordu sıfırdan kapatıp yeniden açıyoruz.
+
+----------------------------------------------------------------------------------------------------
+
+6- Yapabileceğiniz önemli bir dns ayarımız var. (Bazı internetlerde işe yarar.)
+
+Yapmak için DNS & Network Fix klasörüne giriş yapıyoruz. "Ethernet-Settings" dosyasını açıyoruz.
+
+Karşımıza gelen ekranda biraz aşşağıda "DNS sunucusu ataması:" Seçeneğini göreceğiz. Sağ tarafından düzenleye tıklayarak "Otomatik (DHCP)" Seçeneğini "El ile girilen" seçeneğine çeviriyoruz.
+
+Takip etmemiz gereken adımlar şu şekilde:
+
+1- IPv4 tikini aç.
+2- Tercih edilen DNS kısmına girilecek dns: 1.1.1.1 eğer çalışmıyor ise 8.8.8.8
+3- HTTPS üzerinden DNS (kapalı)
+4- Alternatif DNS: 1.0.0.1 eğer çalışmıyor ise 8.8.4.4
+5- HTTPS üzerinden DNS (kapalı)
+6- IPv6 kapalı.
+
+----------------------------------------------------------------------------------------------------
+
+Eğer bu işlemleri yaptıktan sonra yine discord Update Failed hatası alıyorsanız son çözümümüz şudur: (ÇOK DİKKATLİ VE DÜZGÜN YAPMANIZ GEREKİYOR.)
+
+1- Remove Discord klasörüne giriş yapıyoruz.
+2- Applications dosyasını açın ve arama kısmına Discord yazıp silin.
+3- RemoveDiscord.ps1 dosyasını açın ve silindikten sonra dosyayı kapatın.
+4- RemoveDiscord2.ps1 dosyasını açın ve silindikten sonra dosyayı kapatın.
+5- Installers klasörüne girin. İçerisinden "Install-Warp.ps1" dosyasını açın. Kurulduktan sonra bağlantıyı eşleştirin. (Bilgisayarınızda warp yüklü ise yeniden yüklemenize gerek yok.)
+6- "Install-Discord.ps1" dosyasını açın. Discord yüklendikten sonra direk açılması gerekiyor.
+7- Discord açıldıktan sonra Warp açık kalmaya devam edecek. Ve şimdi ise şunu yapıyoruz:
+	Installers klasörüne giriş yaptıktan sonra içerisindeki "Goodbyedpi-new-version.ps1" dosyasını açın.
+	Dosya yüklenip açıldıktan sonra içerisinden "service_install_dnsredir_turkey.cmd" dosyasını yönetici olarak açıp işlem tamamlandıktan sonra enter basıp kapatıyoruz.
+	Eğer internetiniz Superonline ise aşşğıdaki alternatif bütün servisleri yükleyip deneyebilirsiniz. Fakat yükledikten sonra eğer discord çalışmaz veya kapanır ise "service_remove" dosyasından servisi silin yeniden alternetifi deneyin.
+
+----------------------------------------------------------------------------------------------------
+	
+	Örnek vericek olursam:
+
+Alternatif 1 yükledim çalışmadı.
+
+Service_remove dosyasını açıp siliyorum.
+
+Alternatif 2 yükledim çalışmadı.
+
+Service_remove dosyasını açıp siliyorum.
+
+Alternatif 3 yükledim  çalıştı. gibi.
+
+----------------------------------------------------------------------------------------------------
+
+8- Goodbyedpi çalıştıktan sonra artık bilgisayarınızdan Warp'ı kapatabilirsiniz.
+9- Bazı zamanlar Warp kapalı goodbyedpi açık ise discord yine açılmıyor olabiliyor. Bunun çözümüde şu şekilde:
+
+Warpı kapattıktan sonra goodbyedpi servisinide kapatın. Böylelikle discord çalışıyor vaziyette kalacaktır.
+
+İşlemler bu şekilde başkada bir çözümü malesef ki yok. Fakat bulduğum zaman yeniden buralara alternatifleri ekleyeceğim.
+
+
+
+
+
+
+
